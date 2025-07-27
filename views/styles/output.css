@@ -1208,3 +1208,8 @@ video {
     color-scheme: dark;
   }
 }
+
+#edit-icon {
+  color : blue;
+  background-color: rgba(4, 4, 206, 0.877);
+}
