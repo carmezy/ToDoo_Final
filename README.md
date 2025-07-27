@@ -26,3 +26,6 @@ Bcrypt: Para el hashing seguro de contraseñas.
 
 Base de Datos:
 MongoDB: Base de datos NoSQL flexible y escalable.
+
+
+Autores: Pakita y Gustavo
