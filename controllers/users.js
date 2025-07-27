@@ -60,7 +60,7 @@ usersRouters.post('/' , async (req, res) =>{
     }
 });
 
-usersRouters.get('/verify/:id/:token' , async (req, res) =>{
+usersRouters.patch('/verify/:id/:token' , async (req, res) =>{
  try {
    
     const token = req.params.token;
@@ -97,7 +97,7 @@ usersRouters.get('/verify/:id/:token' , async (req, res) =>{
         html: `<a href="${PAGE_URL}/verify/${id}/${token}">Verify Mail</a>`,
     });
 
-    return res.status(400).json({error: 'El link ha expirado, verifica tu correo nuevamente para obtener el nuevo link.'})
+    return res.status(200).json({message: 'El link ha expirado. te hemos enviado un nuevo codigo a tu correo.'});
  }
 });
 
