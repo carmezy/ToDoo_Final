@@ -60,7 +60,7 @@ usersRouters.post('/' , async (req, res) =>{
     }
 });
 
-usersRouters.patch('/:id/:token' , async (req, res) =>{
+usersRouters.get('/verify/:id/:token' , async (req, res) =>{
  try {
    
     const token = req.params.token;
@@ -68,7 +68,7 @@ usersRouters.patch('/:id/:token' , async (req, res) =>{
   const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
   const id = decodedToken.id;
   await User.findByIdAndUpdate(id, {verified: true});
-  return res.sendStatus(200);
+  return res.status(200).json({ message: '¡Tu cuenta ha sido verificada exitosamente!' });
  } catch (error) {
     //Encontrar el mail del usuario
     const id = req.params.id;
