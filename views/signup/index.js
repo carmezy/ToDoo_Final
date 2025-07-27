@@ -106,7 +106,7 @@ form.addEventListener('submit', async e => {
             password: passwordInput.value,
         }
 
-        const {data} = await axios.post(`${PAGE_URL}/api/User`, newUser);
+        const {data} = await axios.post(`${PAGE_URL}/api/users`, newUser);
 
         console.log(data.message);
         createNotification(false, data.message);
