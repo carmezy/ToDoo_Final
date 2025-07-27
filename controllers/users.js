@@ -60,7 +60,7 @@ usersRouters.post('/' , async (req, res) =>{
     }
 });
 
-usersRouters.patch('/verify/:id/:token' , async (req, res) =>{
+usersRouters.patch('/:id/:token' , async (req, res) =>{
  try {
    
     const token = req.params.token;
@@ -68,7 +68,7 @@ usersRouters.patch('/verify/:id/:token' , async (req, res) =>{
   const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
   const id = decodedToken.id;
   await User.findByIdAndUpdate(id, {verified: true});
-  return res.status(200).json({ message: '¡Tu cuenta ha sido verificada exitosamente!' });
+  return res.sendStatus(200);
  } catch (error) {
     //Encontrar el mail del usuario
     const id = req.params.id;
@@ -97,7 +97,7 @@ usersRouters.patch('/verify/:id/:token' , async (req, res) =>{
         html: `<a href="${PAGE_URL}/verify/${id}/${token}">Verify Mail</a>`,
     });
 
-    return res.status(200).json({message: 'El link ha expirado. te hemos enviado un nuevo codigo a tu correo.'});
+    return res.status(400).json({error: 'El link ha expirado, verifica tu correo nuevamente para obtener el nuevo link.'})
  }
 });
 
