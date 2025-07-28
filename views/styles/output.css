@@ -1209,5 +1209,6 @@ video {
   }
 }
 #edit-icon {
-  background-color: #4338ca;
+  color : blue;
+  background-color: rgba(4, 4, 206, 0.877);
 }
