@@ -1,5 +1,5 @@
 const PAGE_URL = process.env.NODE_ENV === 'production'
-    ? 'https://todoapp-bv2x.onrender.com'
+    ? 'https://todoo-final.onrender.com'
     : process.env.LOCAL_URL;
 
   const MONGO_URI = process.env.NODE_ENV === 'production'

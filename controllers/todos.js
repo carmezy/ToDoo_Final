@@ -3,9 +3,12 @@ const User = require("../models/user");
 const Todo = require("../models/todo");
 
 todosRouter.get('/', async (request , response) =>{
-   const user = request.user
-const todos = await Todo.find({ user: user.id});
-return response.status(200).json(todos);
+   const user = request.user;
+   if (!user) {
+    return response.status(401).json({ error: 'token missing or invalid' });
+   }
+   const todos = await Todo.find({ user: user.id });
+   return response.status(200).json(todos);
 });
 
 todosRouter.post('/', async (request , response) =>{

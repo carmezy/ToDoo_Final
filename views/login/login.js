@@ -42,3 +42,4 @@ passwordInput.addEventListener("input", (e) => {
   passwordValidation = e.target.value.length >= 1;
   validation();
 });
+
