@@ -3,9 +3,12 @@ const User = require("../models/user");
 const Todo = require("../models/todo");
 
 todosRouter.get('/', async (request , response) =>{
-   const user = request.user
-const todos = await Todo.find({ user: user.id});
-return response.status(200).json(todos);
+   const user = request.user;
+   if (!user) {
+    return response.status(401).json({ error: 'token missing or invalid' });
+   }
+   const todos = await Todo.find({ user: user.id });
+   return response.status(200).json(todos);
 });
 
 todosRouter.post('/', async (request , response) =>{
@@ -36,15 +39,24 @@ todosRouter.delete('/:id', async (request , response) =>{
     return response.sendStatus(204);
 });
 
-
 todosRouter.patch('/:id', async (request , response) =>{
-    const user = request.user;
+   // Extraemos todos los campos que podrían ser actualizados
+   const { checked, text } = request.body; 
+   const todoIdToUpdate = request.params.id;
 
-   const { checked } = request.body;
-
-   await Todo.findByIdAndUpdate(request.params.id, { checked });
-
-   return response.sendStatus(200);
+   // Construye un objeto con los campos a actualizar dinámicamente
+   const updateFields = {};
+   if (checked !== undefined) { 
+       updateFields.checked = checked;
+   }
+   if (text !== undefined) { // Solo actualiza 'text' si está presente en el body
+       updateFields.text = text;
+   }
+    // Actualiza la tarea con los campos proporcionados
+   const updatedTodo = await Todo.findByIdAndUpdate(todoIdToUpdate, updateFields, { new: true });
+   if (!updatedTodo) {
+       return response.status(404).json({ message: 'Tarea no encontrada' });
+   }
+   return response.status(200).json(updatedTodo); // Devuelve la tarea actualizada
 });
-
 module.exports= todosRouter;
