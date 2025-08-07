@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Support - Ciberseguridad</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+<main>
+        <section class="hero-section">
+            <video src="../../video/video1.mp4" autoplay muted loop class="hero-bg-video"></video>
+    <div class="hero-content">
+                <p>nuestros productos</p>
+                <h1>de reconocimento global</h1>
+            </div>
+</main>
+
+ <section class="company-intro">
+            <h1>adquiera algunos de nuestros planes con variedad de servicios y precios para su comodidad</h1>
+</section>
+
+    <section class="programs-section-2">
+        <div class="program-cards-2">
+            <!-- Tarjeta 1: Plan Básico -->
+            <div class="card-2" 
+                 data-titulo="Plan Básico"
+                 data-descripcion-larga="Ideal para usuarios individuales que buscan una protección esencial. Incluye nuestro antivirus de última generación, actualizaciones automáticas de seguridad para mantenerte protegido contra las últimas amenazas y acceso a nuestro soporte técnico 24/7 vía chat y correo electrónico.">
+                <h5 class="card-header">plan basico</h5>
+                <div class="card-body">
+                    <h5 class="card-title">nuestro plan basico incluye</h5>
+                    <ul>
+                        <li>protección antivirus</li>
+                        <li>actualizaciones de seguridad</li>
+                        <li>soporte técnico 24/7</li>
+                    </ul>
+                <button class="btn btn-primary btn-ver-mas">Ver detalles</button>
+            </div>
+        </div>
+        
+        <!-- Tarjeta 2: Plan Advance -->
+        <div class="card-2"
+             data-titulo="Plan Advance"
+             data-descripcion-larga="Perfecto para profesionales y pequeñas empresas. Además de todo lo del plan Básico, ofrecemos instalación de software guiada, asistencia remota para solucionar problemas, y mantenimiento preventivo para optimizar el rendimiento y la seguridad de tus equipos.">
+            <h5 class="card-header">plan advance</h5>
+            <div class="card-body">
+                <h5 class="card-title">nuestro plan advance incluye</h5>
+                <ul>
+                    <li>instalación de software y guia</li>
+                    <li>asistencia virtual y física</li>
+                    <li>mantenimiento preventivo y correctivo</li>
+                    <li>ayuda y asesoramiento a distancia</li>
+                </ul>
+                <button class="btn btn-primary btn-ver-mas">Ver detalles</button>
+            </div>
+        </div> 
+        
+        <!-- Tarjeta 3: Plan Premium -->
+        <div class="card-2"
+             data-titulo="Plan Premium"
+             data-descripcion-larga="Nuestra solución completa para los más exigentes. Incluye todos los beneficios del plan Advance con soporte prioritario 24/7, supervisión activa de tus sistemas para detectar amenazas en tiempo real y acceso exclusivo a nuestro catálogo de herramientas de seguridad avanzadas.">
+            <h5 class="card-header">plan premium</h5>
+            <div class="card-body">
+                <h5 class="card-title">nuestro plan premium incluye</h5>
+                <ul>
+                    <li>instalación de software y guia</li>
+                    <li>asistencia virtual y física 24 horas</li>
+                    <li>mantenimiento preventivo y correctivo</li>
+                    <li>soporte técnico 24/7</li>
+                    <li>ayuda y asesoramiento a distancia </li>
+                    <li>inscripción nuestro catálogo</li>
+                    <li>supervisión activa</li>
+                </ul>
+                <button class="btn btn-primary btn-ver-mas">Ver detalles</button>
+            </div>
+        </div> 
+
+        <!-- Tarjeta 4: Plan Royal -->
+        <div class="card-2"
+             data-titulo="Plan Royal"
+             data-descripcion-larga="El paquete definitivo para empresas y corporaciones. Contiene todos los servicios del plan Premium, más un plan de formación en ciberseguridad para tus empleados, auditorías de seguridad periódicas y un gestor de cuenta dedicado para atender todas tus necesidades.">
+            <h5 class="card-header">plan royal</h5>
+            <div class="card-body">
+                <h5 class="card-title">nuestro plan royal incluye</h5>
+                <ul>
+                    <li>instalación de software y guia</li>
+                    <li>asistencia virtual y física 24 horas</li>
+                    <li>mantenimiento preventivo y correctivo</li>
+                    <li>soporte técnico 24/7</li>
+                    <li>ayuda y asesoramiento a distancia </li>
+                    <li>supervisión activa</li>
+                    <li>inscripción nuestro catálogo</li>
+                    <li>plan empresarial para nuestros cursos</li>
+                </ul>
+                <button class="btn btn-primary btn-ver-mas">Ver detalles</button>
+            </div>
+        </div> 
+
+        
+    </div>
+
+    <!-- La Ventana Emergente (Modal) -->
+    <div id="modal-servicio" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar-modal">&times;</span>
+            <h2 id="modal-titulo"></h2>
+            <p id="modal-descripcion"></p>
+            <button id="btn-agregar-plan" class="btn btn-primary">Agregar Plan</button>
+        </div>
+    </div>
+
+    <!-- Se añade axios para las peticiones y se carga el script de la página -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../components/nav.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

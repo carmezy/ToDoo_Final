@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const loginRouter = require("./controllers/login");
 const usersRouters = require("./controllers/users"); 
-const todosRouter = require("./controllers/todos");
+const servicesRouter = require("./controllers/services");
 const { userExtractor } = require("./middleware/auth");
 const logoutRouter = require("./controllers/logout");
 const { MONGO_URI } = require("./config");
@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", usersRouters);
 app.use("/api/login", loginRouter); 
 app.use("/api/logout", logoutRouter); 
-app.use("/api/todos", userExtractor , todosRouter); 
+app.use("/api/cuenta", userExtractor , servicesRouter); 
 
 // Rutas FrontEnd
 app.use("/", express.static(path.join(__dirname, "views", "home")));
@@ -47,9 +47,11 @@ app.use('/styles', express.static(path.join(__dirname, "views", "styles")));
 app.use('/verify/:id/:token', express.static(path.join(__dirname, "views", "verify")));
 app.use("/signup", express.static(path.join(__dirname, "views", "signup")));
 app.use("/login", express.static(path.join(__dirname, "views", "login")));
-app.use("/todos", express.static(path.join(__dirname, "views", "todos")));
+app.use("/cuenta", express.static(path.join(__dirname, "views", "cuenta")));
+app.use("/servicios", express.static(path.join(__dirname, "views", "servicios")));
 app.use("/components", express.static(path.join(__dirname, "views", "components")));
 app.use('/img', express.static(__dirname + '/img'));
+app.use('/video', express.static(path.join(__dirname, 'video')));
 app.use('/verify/:token', express.static(path.resolve( "views", "verify")));
 
 //Morgan

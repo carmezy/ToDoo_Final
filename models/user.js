@@ -9,9 +9,13 @@ const userSchema = new monggoose.Schema({
         type:Boolean,
         default:false
     },  
-    todos: [{
+    plan: {
+        type: String,
+        default: 'Ninguno'
+    },
+    services: [{
          type: mongoose.Schema.Types.ObjectId,
-         ref: 'User'
+         ref: 'Service'
     }]
 });
 

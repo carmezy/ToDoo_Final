@@ -1,127 +1,84 @@
-const navbar = document.querySelector('#navbar');
+document.addEventListener('DOMContentLoaded', () => {
+    // La ruta debe ser relativa al archivo HTML que la carga.
+    fetch('../components/navbar.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No se pudo cargar la barra de navegación.');
+            }
+            return response.text();
+        })
+        .then(data => {
+            document.body.insertAdjacentHTML('afterbegin', data);
 
-const createNavHome = () => {
-    navbar.innerHTML = `<div class="max-width-7xl h-16 mx-auto flex items-center px-4 justify-between">
-                            <p class="font-bold text-sm text-white">TodoApp</p>
+            // Configurar el menú hamburguesa para móviles
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.navbar ul');
 
-                            <!-- version mobile -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 md:hidden text-white cursor-pointer p-2 rounded-lg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                            <div class="bg-slate-900/80 fixed top-16 right-0 left-0 bottom-0 flex justify-center items-center flex-col gap-4 hidden">
-                                <a href="/login" class="transition ease-in-out text-white font-bold hover:bg-indigo-800 py-2 px-4 rounded-lg">Login</a>
-                                <a href="/signup" class="transition ease-in-out text-white font-bold bg-indigo-500 hover:bg-indigo-800 py-2 px-4 rounded-lg">Registro</a>
-                            </div>
-                                
-                            <!-- version de escritorio -->
-                            <div class="hidden md:flex flex-row gap-4">
-                                <a href="/login/" class="transition ease-in-out text-white font-bold hover:bg-indigo-800 py-2 px-4 rounded-lg">Login</a>
-                                <a href="/signup/" class="transition ease-in-out text-white font-bold bg-indigo-500 hover:bg-indigo-800 py-2 px-4 rounded-lg">Registro</a>
-                            </div>
-                        </div>`;
-};
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('open');
+                });
+            }
 
-const createNavSignup = () => {
-    navbar.innerHTML = `<div class="max-width-7xl h-16 mx-auto flex items-center px-4 justify-between">
-                            <p class="font-bold text-sm text-white">TodoApp</p>
+            // Actualizar la barra de navegación según el contexto (página y autenticación)
+            updateNavbar();
+        })
+        .catch(error => {
+            console.error('Error al cargar el componente de navegación:', error);
+        });
+});
 
-                            <!-- version mobile -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 md:hidden text-white cursor-pointer p-2 rounded-lg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                            <div class="bg-slate-900/80 fixed top-16 right-0 left-0 bottom-0 flex justify-center items-center flex-col gap-4 hidden">
-                                <a href="/login" class="transition ease-in-out text-white font-bold hover:bg-indigo-800 py-2 px-4 rounded-lg">Login</a>
-                            </div>
-                                
-                            <!-- version de escritorio -->
-                            <div class="hidden md:flex flex-row gap-4">
-                                <a href="/login/" class="transition ease-in-out text-white font-bold hover:bg-indigo-800 py-2 px-4 rounded-lg">Login</a>
-                            </div>
-                        </div>`;
-};
+/**
+ * Actualiza la barra de navegación dinámicamente según la página actual
+ * y el estado de autenticación del usuario.
+ */
+async function updateNavbar() {
+    const loginLink = document.querySelector('#login-link');
+    const registerLink = document.querySelector('#register-link');
+    const navMenuList = document.querySelector('.navbar ul');
 
-const createNavLogin = () => {
-    navbar.innerHTML = `<div class="max-width-7xl h-16 mx-auto flex items-center px-4 justify-between">
-                            <p class="font-bold text-sm text-white">TodoApp</p>
+    if (!loginLink || !registerLink || !navMenuList) {
+        console.error('No se encontraron los elementos necesarios en la barra de navegación.');
+        return;
+    }
 
-                            <!-- version mobile -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 md:hidden text-white cursor-pointer p-2 rounded-lg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                            <div class="bg-slate-900/80 fixed top-16 right-0 left-0 bottom-0 flex justify-center items-center flex-col gap-4 hidden">
-                                <a href="/signup" class="transition ease-in-out text-white font-bold bg-indigo-500 hover:bg-indigo-800 py-2 px-4 rounded-lg">Registro</a>
-                            </div>
-                                
-                            <!-- version de escritorio -->
-                            <div class="hidden md:flex flex-row gap-4">
-                                <a href="/signup/" class="transition ease-in-out text-white font-bold bg-indigo-500 hover:bg-indigo-800 py-2 px-4 rounded-lg">Registro</a>
-                            </div>
-                        </div>`;
-};
+    try {
+        // 1. VERIFICAR SI EL USUARIO ESTÁ AUTENTICADO
+        await axios.get('/api/users/me', { withCredentials: true });
 
-const createNavTodos = () => {
-    navbar.innerHTML = `<div class="max-width-7xl h-16 mx-auto flex items-center px-4 justify-between">
-                            <p class="font-bold text-sm text-white">TodoApp</p>
+        // --- VISTA PARA USUARIO AUTENTICADO ---
+        // Si la petición tiene éxito, el usuario está logueado.
+        loginLink.parentElement.remove();
+        registerLink.parentElement.remove();
 
-                            <!-- version mobile -->
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 md:hidden text-white cursor-pointer p-2 rounded-lg">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                            </svg>
-                            <div class="bg-slate-900/80 fixed top-16 right-0 left-0 bottom-0 flex justify-center items-center flex-col gap-4 hidden">
-                                <button id="close-btn" class="transition ease-in-out text-white font-bold bg-indigo-500 hover:bg-indigo-800 py-2 px-4 rounded-lg">Cerrar Sesion</button>
-                            </div>
-                                
-                            <!-- version de escritorio -->
-                            <div class="hidden md:flex flex-row gap-4">
-                                <button id="close-btn" class="transition ease-in-out text-white font-bold bg-indigo-500 hover:bg-indigo-800 py-2 px-4 rounded-lg">Cerrar Sesion</button>
-                            </div>
-                        </div>`;
-};
+        // Añadir enlace "Mi Cuenta"
+        const accountLi = document.createElement('li');
+        accountLi.innerHTML = `<a href="/views/cuenta/index.html" class="nav-link">Mi Cuenta</a>`;
+        navMenuList.appendChild(accountLi);
 
-if(window.location.pathname === '/') {
-    createNavHome();
-} else if (window.location.pathname === '/signup/' || window.location.pathname === '/signup') {
-    createNavSignup();
-} else if (window.location.pathname === '/login/' || window.location.pathname === '/login') {
-    createNavLogin();
-} else if (window.location.pathname === '/todos/' || window.location.pathname === '/todos') {
-    createNavTodos();
+        // Añadir botón "Cerrar Sesión"
+        const logoutLi = document.createElement('li');
+        logoutLi.innerHTML = `<button id="logout-btn" class="nav-button">Cerrar Sesión</button>`;
+        navMenuList.appendChild(logoutLi);
+
+        document.querySelector('#logout-btn').addEventListener('click', async () => {
+            await axios.get('/api/logout', { withCredentials: true });
+            window.location.href = '/';
+        });
+
+    } catch (error) {
+        // --- VISTA PARA USUARIO NO AUTENTICADO ---
+        // Si la petición falla (ej. 401), el usuario no está logueado.
+        // Ahora, ajustamos la vista según la página actual.
+        const path = window.location.pathname;
+
+        if (path.includes('/login')) {
+            // Si está en la página de login, ocultar el botón de login.
+            loginLink.style.display = 'none';
+        } else if (path.includes('/signup')) {
+            // Si está en la página de registro, ocultar el botón de registro.
+            registerLink.style.display = 'none';
+        }
+        // Si está en home u otra página, se muestran ambos por defecto.
+    }
 }
-
-const navBtn = navbar.children[0].children[1];
-
-navBtn.addEventListener('click', e => {
-    const menuMobile = navbar.children[0].children[2];
-    
-    if (!navBtn.classList.contains('active')) {
-        navBtn.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />`
-        navBtn.classList.add('active');
-        menuMobile.classList.remove('hidden');
-        menuMobile.classList.add('flex');
-    } else {
-        navBtn.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />`;
-        navBtn.classList.remove('active');
-        menuMobile.classList.add('hidden');
-        menuMobile.classList.remove('flex');
-    }
-})
-
-const closeBtnDescktop = navbar.children[0].children[3].children[0];
-const closeBtnMobile = navbar.children[0].children[2].children[0];
-
-closeBtnDescktop.addEventListener('click', async e => {
-    try {
-        await axios.get('/api/logout');
-        window.location.pathname = '/login';
-    } catch (error) {
-        console.log(error);
-    }
-})
-closeBtnMobile.addEventListener('click', async e => {
-    try {
-        await axios.get('/api/logout');
-        window.location.pathname = '/login';
-    } catch (error) {
-        console.log(error);
-    }
-})

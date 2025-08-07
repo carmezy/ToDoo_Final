@@ -18,6 +18,7 @@ let matchValidation = false;
 
 // Esta función ahora solo maneja los estilos del input individual
 const validation = (input, isValid) => {
+
     if (input.value === "") {
         input.classList.remove(
             "outline-green-700",
@@ -95,6 +96,8 @@ matchInput.addEventListener('input', e => {
 
 // Inicializa el estado del botón al cargar la página
 document.addEventListener('DOMContentLoaded', validateForm);
+
+
 
 
 form.addEventListener('submit', async e => {

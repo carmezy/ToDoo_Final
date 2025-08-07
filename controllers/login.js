@@ -25,7 +25,8 @@ loginRouter.post("/", async (request, response) => {
   }
 
   const userForToken = {
-    id: userExist.id
+    id: userExist.id,
+    email: userExist.email
   };
 
   const accessToken = jwt.sign(userForToken, process.env.ACCESS_TOKEN_SECRET, {
@@ -38,7 +39,7 @@ loginRouter.post("/", async (request, response) => {
     httpOnly: true
   });
 
-  return response.sendStatus(200);
+  return response.status(200).json({ email: userExist.email });
 });
 
 module.exports = loginRouter;

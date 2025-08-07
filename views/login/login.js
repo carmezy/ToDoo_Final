@@ -21,7 +21,7 @@ form.addEventListener("submit", async (event) => {
       password: passwordInput.value,
     };
     await axios.post(`${PAGE_URL}/api/login`, user, { withCredentials: true });
-    window.location.pathname = `/todos/`;
+    window.location.pathname = `/cuenta/`;
   } catch (error) {
     console.log(error);
     errorText.innerHTML = error.response.data.error;
@@ -42,4 +42,3 @@ passwordInput.addEventListener("input", (e) => {
   passwordValidation = e.target.value.length >= 1;
   validation();
 });
-
